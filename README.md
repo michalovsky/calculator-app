@@ -1,2 +1,2 @@
-# calculator-sfml
+# calculator-app
 Simple calculator in SFML
