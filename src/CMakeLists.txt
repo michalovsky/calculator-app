@@ -1,7 +1,7 @@
 set(SOURCES
         Buffer.cpp
         Calculator.cpp
-        Input.cpp
+        UserInputReader.cpp
         Interaction.cpp
         OperationSolver.cpp
         Tile.cpp

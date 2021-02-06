@@ -1,5 +1,8 @@
 #include "Tiles.h"
 
+#include "LayoutCharacter.h"
+
+using namespace calculator;
 
 Tiles::Tiles()
 {
@@ -15,15 +18,15 @@ void Tiles::initialize()
 		tiles.push_back(std::unique_ptr<Tile>(new Tile(std::to_string(tileIndex), tilesPositions[tileIndex])));
 	}
 
-	tiles.push_back(std::unique_ptr<Tile>(new Tile("+", tilesPositions[(int)Characters::PLUS])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile("-", tilesPositions[(int)Characters::MINUS])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile("x", tilesPositions[(int)Characters::MULTIPLICATION])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile("/", tilesPositions[(int)Characters::DIVISION])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile("=", tilesPositions[(int)Characters::EQUALS])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile("<-", tilesPositions[(int)Characters::REMOVE])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile("C", tilesPositions[(int)Characters::CLEAR])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile(".", tilesPositions[(int)Characters::DOT])));
-	tiles.push_back(std::unique_ptr<Tile>(new Tile(tilesPositions[(int)Characters::RESULT])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile("+", tilesPositions[(int)LayoutCharacter::Plus])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile("-", tilesPositions[(int)LayoutCharacter::Minus])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile("x", tilesPositions[(int)LayoutCharacter::Multiplication])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile("/", tilesPositions[(int)LayoutCharacter::Division])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile("=", tilesPositions[(int)LayoutCharacter::Equal])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile("<-", tilesPositions[(int)LayoutCharacter::Remove])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile("C", tilesPositions[(int)LayoutCharacter::Clear])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile(".", tilesPositions[(int)LayoutCharacter::Dot])));
+	tiles.push_back(std::unique_ptr<Tile>(new Tile(tilesPositions[(int)LayoutCharacter::Result])));
 }
 
 void Tiles::initializePositions()
@@ -33,25 +36,25 @@ void Tiles::initializePositions()
 		tilesPositions.push_back({ 0,0 });
 	}
 
-	tilesPositions[(int)Characters::ZERO] = sf::Vector2f(145, 500);
-	tilesPositions[(int)Characters::ONE] = sf::Vector2f(70, 435);
-	tilesPositions[(int)Characters::TWO] = sf::Vector2f(145, 435);
-	tilesPositions[(int)Characters::THREE] = sf::Vector2f(220, 435);
-	tilesPositions[(int)Characters::FOUR] = sf::Vector2f(70, 370);
-	tilesPositions[(int)Characters::FIVE] = sf::Vector2f(145, 370);
-	tilesPositions[(int)Characters::SIX] = sf::Vector2f(220, 370);
-	tilesPositions[(int)Characters::SEVEN] = sf::Vector2f(70, 305);
-	tilesPositions[(int)Characters::EIGHT] = sf::Vector2f(145, 305);
-	tilesPositions[(int)Characters::NINE] = sf::Vector2f(220, 305);
-	tilesPositions[(int)Characters::PLUS] = sf::Vector2f(295, 435);
-	tilesPositions[(int)Characters::MINUS] = sf::Vector2f(295, 370);
-	tilesPositions[(int)Characters::MULTIPLICATION] = sf::Vector2f(295, 305);
-	tilesPositions[(int)Characters::DIVISION] = sf::Vector2f(295, 240);
-	tilesPositions[(int)Characters::EQUALS] = sf::Vector2f(295, 500);
-	tilesPositions[(int)Characters::REMOVE] = sf::Vector2f(220, 240);
-	tilesPositions[(int)Characters::CLEAR] = sf::Vector2f(145, 240);
-	tilesPositions[(int)Characters::DOT] = sf::Vector2f(220, 500);
-	tilesPositions[(int)Characters::RESULT] = sf::Vector2f(3 + 67, 20 + 83);
+	tilesPositions[(int)LayoutCharacter::Number0] = sf::Vector2f(145, 500);
+	tilesPositions[(int)LayoutCharacter::Number1] = sf::Vector2f(70, 435);
+	tilesPositions[(int)LayoutCharacter::Number2] = sf::Vector2f(145, 435);
+	tilesPositions[(int)LayoutCharacter::Number3] = sf::Vector2f(220, 435);
+	tilesPositions[(int)LayoutCharacter::Number4] = sf::Vector2f(70, 370);
+	tilesPositions[(int)LayoutCharacter::Number5] = sf::Vector2f(145, 370);
+	tilesPositions[(int)LayoutCharacter::Number6] = sf::Vector2f(220, 370);
+	tilesPositions[(int)LayoutCharacter::Number7] = sf::Vector2f(70, 305);
+	tilesPositions[(int)LayoutCharacter::Number8] = sf::Vector2f(145, 305);
+	tilesPositions[(int)LayoutCharacter::Number9] = sf::Vector2f(220, 305);
+	tilesPositions[(int)LayoutCharacter::Plus] = sf::Vector2f(295, 435);
+	tilesPositions[(int)LayoutCharacter::Minus] = sf::Vector2f(295, 370);
+	tilesPositions[(int)LayoutCharacter::Multiplication] = sf::Vector2f(295, 305);
+	tilesPositions[(int)LayoutCharacter::Division] = sf::Vector2f(295, 240);
+	tilesPositions[(int)LayoutCharacter::Equal] = sf::Vector2f(295, 500);
+	tilesPositions[(int)LayoutCharacter::Remove] = sf::Vector2f(220, 240);
+	tilesPositions[(int)LayoutCharacter::Clear] = sf::Vector2f(145, 240);
+	tilesPositions[(int)LayoutCharacter::Dot] = sf::Vector2f(220, 500);
+	tilesPositions[(int)LayoutCharacter::Result] = sf::Vector2f(3 + 67, 20 + 83);
 
 	for (auto & position : tilesPositions)
 	{
@@ -65,7 +68,7 @@ void Tiles::update(std::string resultLine)
 	int tileIndex = 0;
 	for (std::unique_ptr<Tile> & tile : tiles)
 	{
-		if (tileIndex == (int)Characters::RESULT)
+		if (tileIndex == (int)LayoutCharacter::Result)
 		{
 			tile->updateResultTile(tilesPositions[tileIndex], resultLine);
 		}

@@ -1,6 +1,5 @@
 #pragma once
 #include "Tile.h"
-#include "Constants.h"
 #include "Buffer.h"
 #include "OperationSolver.h"
 

@@ -1,11 +1,12 @@
 #pragma once
-#include "Tiles.h"
-#include "Buffer.h"
-#include "Interaction.h"
-#include "Input.h"
+#include <iostream>
 #include <memory>
 #include <vector>
-#include <iostream>
+
+#include "Buffer.h"
+#include "Interaction.h"
+#include "Tiles.h"
+#include "UserInputReader.h"
 
 class Calculator
 {
@@ -16,11 +17,12 @@ public:
 private:
 	void initialize();
 	void clearWindow();
-	void update(int inputKey);
-	void closeWindow(int inputKey);
+	void update(calculator::InputKey);
+	void closeWindow(calculator::InputKey);
 	void drawWindow();
 	sf::RenderWindow * window;
 	std::unique_ptr<Tiles> tiles;
+    std::unique_ptr<calculator::UserInputReader> userInputReader;
 
 };
 

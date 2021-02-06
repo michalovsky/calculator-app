@@ -1,5 +1,9 @@
 #include "Interaction.h"
 
+#include "LayoutCharacter.h"
+#include "InputKey.h"
+
+using namespace calculator;
 
 void Interaction::mouseOver(vectorOfTiles & tiles, sf::Vector2f mousePosition)
 {
@@ -11,7 +15,7 @@ void Interaction::mouseOver(vectorOfTiles & tiles, sf::Vector2f mousePosition)
 	int tileIndex = 0;
 	for (auto & tile : tiles)
 	{
-		if (tileIndex == (int)Characters::RESULT)
+		if (tileIndex == (int)LayoutCharacter::Result)
 		{
 			continue;
 		}
@@ -28,38 +32,38 @@ void Interaction::mouseClick(vectorOfTiles & tiles, sf::Vector2f mousePosition, 
 	int tileIndex = 0;
 	for (auto & tile : tiles)
 	{
-		if (isIntersecting(*tile, mousePosition) && actionKey == (int)Inputs::MOUSELEFT)
+		if (isIntersecting(*tile, mousePosition) && actionKey == (int)InputKey::MouseLeft)
 		{
 			switch (tileIndex)
 			{
-			case (int)Characters::ZERO:
-			case (int)Characters::ONE:
-			case (int)Characters::TWO:
-			case (int)Characters::THREE:
-			case (int)Characters::FOUR:
-			case (int)Characters::FIVE:
-			case (int)Characters::SIX:
-			case (int)Characters::SEVEN:
-			case (int)Characters::EIGHT:
-			case (int)Characters::NINE:
+			case (int)LayoutCharacter::Number0:
+			case (int)LayoutCharacter::Number1:
+			case (int)LayoutCharacter::Number2:
+			case (int)LayoutCharacter::Number3:
+			case (int)LayoutCharacter::Number4:
+			case (int)LayoutCharacter::Number5:
+			case (int)LayoutCharacter::Number6:
+			case (int)LayoutCharacter::Number7:
+			case (int)LayoutCharacter::Number8:
+			case (int)LayoutCharacter::Number9:
 				handleNumbers(tile->getValue());
 				break;
-			case (int)Characters::PLUS:
-			case (int)Characters::MINUS:
-			case (int)Characters::MULTIPLICATION:
-			case (int)Characters::DIVISION:
+			case (int)LayoutCharacter::Plus:
+			case (int)LayoutCharacter::Minus:
+			case (int)LayoutCharacter::Multiplication:
+			case (int)LayoutCharacter::Division:
 				handleSigns(tile->getValue());
 				break;
-			case (int)Characters::EQUALS:
+			case (int)LayoutCharacter::Equal:
 				handleResult();
 				break;
-			case (int)Characters::DOT:
+			case (int)LayoutCharacter::Dot:
 				handleDot(tile->getValue());
 				break;
-			case (int)Characters::CLEAR:
+			case (int)LayoutCharacter::Clear:
 				handleClear();
 				break;
-			case(int)Characters::REMOVE:
+			case(int)LayoutCharacter::Remove:
 				handleRemove();
 				break;
 			}
