@@ -1,96 +1,58 @@
 #include "Tile.h"
 
+#include <iostream>
+#include <utility>
 
-Tile::Tile(std::string label, sf::Vector2f position) :value(label)
+namespace calculator
 {
-	initializeRegularTile(position);
+
+Tile::Tile(const sf::Vector2f& position, const sf::Vector2f& size, float outlineThickness, std::string label,
+           unsigned int characterSize, const sf::Vector2f& textOffsetInit,
+           std::optional<LayoutCharacter> layoutCharacterInit)
+    : text{position + textOffsetInit, std::move(label), characterSize},
+      rectangle{position, size, outlineThickness},
+      textOffset{textOffsetInit},
+      layoutCharacter{layoutCharacterInit}
+{
 }
 
-Tile::Tile(sf::Vector2f position)
+void Tile::update(const sf::Vector2f& updatedPosition)
 {
-	initializeResultTile(position);
+    std::cout << updatedPosition.x << " " <<updatedPosition.y << std::endl;
+    rectangle.updatePosition(updatedPosition);
+    text.update(updatedPosition + textOffset);
 }
 
-void Tile::updateRegularTile(sf::Vector2f position)
+void Tile::update(const sf::Vector2f& updatedPosition, const std::string& updatedLabel)
 {
-	rect.setPosition(position);
-	text.setPosition(sf::Vector2f(rect.getPosition().x + 28, rect.getPosition().y + 5));
+    rectangle.updatePosition(updatedPosition);
+    text.update(updatedPosition + textOffset, updatedLabel);
 }
 
-void Tile::updateResultTile(sf::Vector2f position, std::string resultLine)
+void Tile::changeColor(sf::Color color)
 {
-	text.setString(resultLine);
-	rect.setPosition(position);
-	text.setPosition(sf::Vector2f(rect.getPosition().x + 5, rect.getPosition().y ));
+    rectangle.changeColor(color);
 }
 
-std::string Tile::getValue() const
+std::string Tile::getText() const
 {
-	return value;
+    return text.getValue();
 }
 
-sf::RectangleShape & Tile::getRect()
+std::optional<LayoutCharacter> Tile::getLayoutCharacter() const
 {
-	return rect;
+    return layoutCharacter;
 }
 
-sf::Text & Tile::getText()
+bool Tile::isIntersecting(const sf::Vector2f& position) const
 {
-	return text;
+    return rectangle.isIntersecting(position);
 }
 
-void Tile::initializeRegularTile(sf::Vector2f position)
+void Tile::draw(sf::RenderWindow& window)
 {
-	rect.setSize(sf::Vector2f(70.f, 60.f));
-	width = 70;
-	height = 60;
-	rect.setFillColor(sf::Color::White);
-	rect.setOutlineThickness(1);
-	rect.setOutlineColor(sf::Color::Black);
-	rect.setPosition(position);
-
-	if (!font.loadFromFile("arial.ttf"))
-	{
-		std::cerr << "error\n";
-	}
-
-	text.setFont(font);
-	text.setCharacterSize(40);
-	text.setFillColor(sf::Color::Black);
-	text.setString(value);
-	text.setPosition(sf::Vector2f(rect.getPosition().x + 28, rect.getPosition().y + 5));
+    text.draw(window);
+    rectangle.draw(window);
 }
 
-void Tile::initializeResultTile(sf::Vector2f position)
-{
-	rect.setSize(sf::Vector2f(294.f, 60.f));
-	width = 294;
-	height = 60;
-	rect.setFillColor(sf::Color::White);
-	rect.setOutlineThickness(3);
-	rect.setOutlineColor(sf::Color::Black);
-	rect.setPosition(position);
-
-	if (!font.loadFromFile("arial.ttf"))
-	{
-		std::cerr << "error\n";
-	}
-
-	text.setFont(font);
-	text.setCharacterSize(50);
-	text.setFillColor(sf::Color::Black);
-	text.setString("0");
-	text.setPosition(sf::Vector2f(rect.getPosition().x + 5, rect.getPosition().y));
 }
-
-int Tile::getWidth() const
-{
-	return width;
-}
-
-int Tile::getHeight() const
-{
-	return height;
-}
-
-

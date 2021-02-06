@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace graphics::exceptions
+namespace calculator::exceptions
 {
 struct CannotAccessFontFile : std::runtime_error
 {

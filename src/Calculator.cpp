@@ -7,7 +7,7 @@ Calculator::Calculator()
     window = new sf::RenderWindow(sf::VideoMode(300, 480), "Calculator");
     window->setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - window->getSize().x / 2, sf::VideoMode::getDesktopMode().height / 2 - window->getSize().y / 2));
     window->setFramerateLimit(60);
-	tiles = std::unique_ptr<Tiles>(new Tiles());
+	tiles = std::make_unique<TilesLayout>();
 
     userInputReader = std::make_unique<calculator::UserInputReader>(*window);
 }
@@ -42,8 +42,8 @@ void Calculator::initialize()
 
 void Calculator::update(calculator::InputKey inputKey)
 {
-	Interaction::mouseOver(tiles->getTiles(), userInputReader->readMousePosition());
-	Interaction::mouseClick(tiles->getTiles(), userInputReader->readMousePosition(), (int)inputKey);
+	Interaction::mouseOver(*tiles, userInputReader->readMousePosition());
+	Interaction::mouseClick(*tiles, userInputReader->readMousePosition(), (int)inputKey);
 	tiles->update(Buffer::getWordsAsLine());
 }
 
@@ -62,13 +62,6 @@ void Calculator::closeWindow(calculator::InputKey inputKey)
 
 void Calculator::drawWindow()
 {
-	int index = 0;
-	for (std::unique_ptr<Tile> & tile : tiles->getTiles())
-	{
-		window->draw(tile->getRect());
-		window->draw(tile->getText());
-		index++;
-	}
-
+    tiles->draw(*window);
 	window->display();
 }

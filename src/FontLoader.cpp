@@ -2,10 +2,10 @@
 
 #include "exceptions/CannotAccessFontFile.h"
 
-namespace graphics
+namespace calculator
 {
 
-void FontLoader::load(sf::Font& font, const FontPath& fontPath)
+void FontLoader::load(sf::Font& font, const std::string& fontPath)
 {
     if (not font.loadFromFile(fontPath))
     {

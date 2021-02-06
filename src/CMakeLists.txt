@@ -1,11 +1,18 @@
 set(SOURCES
+        StringHelper.cpp
+        GetExecutablePath.cpp
+        GetProjectPath.cpp
+        UserInputReader.cpp
+        FontLoader.cpp
+        TextSfml.cpp
+        RectangleSfml.cpp
+        Tile.cpp
+        TileCreator.cpp
+        TilesLayout.cpp
+        Interaction.cpp
         Buffer.cpp
         Calculator.cpp
-        UserInputReader.cpp
-        Interaction.cpp
         OperationSolver.cpp
-        Tile.cpp
-        Tiles.cpp
         Main.cpp
         )
 

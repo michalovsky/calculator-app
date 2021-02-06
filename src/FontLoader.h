@@ -2,13 +2,11 @@
 
 #include "SFML/Graphics/Font.hpp"
 
-#include "FontPath.h"
-
-namespace graphics
+namespace calculator
 {
 class FontLoader
 {
 public:
-    static void load(sf::Font&, const FontPath&);
+    static void load(sf::Font&, const std::string& fontPath);
 };
 }

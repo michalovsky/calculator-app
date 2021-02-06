@@ -1,85 +1,67 @@
 #include "Interaction.h"
 
-#include "LayoutCharacter.h"
 #include "InputKey.h"
+#include "LayoutCharacter.h"
+#include "TilesLayout.h"
 
 using namespace calculator;
 
-void Interaction::mouseOver(vectorOfTiles & tiles, sf::Vector2f mousePosition)
+void Interaction::mouseOver(TilesLayout& tilesLayout, sf::Vector2f mousePosition)
 {
-	for (auto & tile : tiles)
-	{
-		tile->getRect().setFillColor(sf::Color::White);
-	}
+    tilesLayout.changeTilesColor(sf::Color::White);
 
-	int tileIndex = 0;
-	for (auto & tile : tiles)
-	{
-		if (tileIndex == (int)LayoutCharacter::Result)
-		{
-			continue;
-		}
-		else if (isIntersecting(*tile, mousePosition))
-		{
-			tile->getRect().setFillColor(sf::Color(189, 189, 189, 255));
-		}
-		tileIndex++;
-	}
+    const auto mouseOverColor = sf::Color(189, 189, 189, 255);
+    tilesLayout.changeTilesColorOnIntersection(mouseOverColor, mousePosition);
 }
 
-void Interaction::mouseClick(vectorOfTiles & tiles, sf::Vector2f mousePosition, int actionKey)
+void Interaction::mouseClick(TilesLayout & tilesLayout, sf::Vector2f mousePosition, int actionKey)
 {
-	int tileIndex = 0;
-	for (auto & tile : tiles)
-	{
-		if (isIntersecting(*tile, mousePosition) && actionKey == (int)InputKey::MouseLeft)
-		{
-			switch (tileIndex)
-			{
-			case (int)LayoutCharacter::Number0:
-			case (int)LayoutCharacter::Number1:
-			case (int)LayoutCharacter::Number2:
-			case (int)LayoutCharacter::Number3:
-			case (int)LayoutCharacter::Number4:
-			case (int)LayoutCharacter::Number5:
-			case (int)LayoutCharacter::Number6:
-			case (int)LayoutCharacter::Number7:
-			case (int)LayoutCharacter::Number8:
-			case (int)LayoutCharacter::Number9:
-				handleNumbers(tile->getValue());
-				break;
-			case (int)LayoutCharacter::Plus:
-			case (int)LayoutCharacter::Minus:
-			case (int)LayoutCharacter::Multiplication:
-			case (int)LayoutCharacter::Division:
-				handleSigns(tile->getValue());
-				break;
-			case (int)LayoutCharacter::Equal:
-				handleResult();
-				break;
-			case (int)LayoutCharacter::Dot:
-				handleDot(tile->getValue());
-				break;
-			case (int)LayoutCharacter::Clear:
-				handleClear();
-				break;
-			case(int)LayoutCharacter::Remove:
-				handleRemove();
-				break;
-			}
-		}
-		tileIndex++;
-	}
+    if (actionKey != (int)InputKey::MouseLeft)
+    {
+        return;
+    }
+
+    if (const auto tileIntersectedInfo = tilesLayout.getInformationAboutTileBeingIntersected(mousePosition))
+    {
+        switch (tileIntersectedInfo->layoutCharacter)
+        {
+        case LayoutCharacter::Number0:
+        case LayoutCharacter::Number1:
+        case LayoutCharacter::Number2:
+        case LayoutCharacter::Number3:
+        case LayoutCharacter::Number4:
+        case LayoutCharacter::Number5:
+        case LayoutCharacter::Number6:
+        case LayoutCharacter::Number7:
+        case LayoutCharacter::Number8:
+        case LayoutCharacter::Number9:
+            handleNumbers(tileIntersectedInfo->text);
+            break;
+        case LayoutCharacter::Plus:
+        case LayoutCharacter::Minus:
+        case LayoutCharacter::Multiplication:
+        case LayoutCharacter::Division:
+            handleSigns(tileIntersectedInfo->text);
+            break;
+        case LayoutCharacter::Equal:
+            handleResult();
+            break;
+        case LayoutCharacter::Dot:
+            handleDot(tileIntersectedInfo->text);
+            break;
+        case LayoutCharacter::Clear:
+            handleClear();
+            break;
+        case LayoutCharacter::Remove:
+            handleRemove();
+            break;
+        }
+    }
 }
 
-bool Interaction::isIntersecting(Tile & tile, sf::Vector2f position)
+bool Interaction::isIntersecting(calculator::Tile & tile, sf::Vector2f position)
 {
-	sf::Vector2f tilePosition = tile.getRect().getPosition();
-	int tileWidth = tile.getWidth();
-	int tileHeight = tile.getHeight();
-
-	return (position.x >= tilePosition.x && position.x <= tilePosition.x + tileWidth &&
-		position.y >= tilePosition.y && position.y <= tilePosition.y + tileHeight);
+    return tile.isIntersecting(position);
 }
 
 void Interaction::handleNumbers(std::string value)
