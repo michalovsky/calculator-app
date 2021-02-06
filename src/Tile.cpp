@@ -51,8 +51,8 @@ bool Tile::isIntersecting(const sf::Vector2f& position) const
 
 void Tile::draw(sf::RenderWindow& window)
 {
-    text.draw(window);
     rectangle.draw(window);
+    text.draw(window);
 }
 
 }

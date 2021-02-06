@@ -80,8 +80,8 @@ std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
 
     for (auto& position : tilePositions)
     {
-        position.x -= 67;
-        position.y -= 83;
+        //        position.x -= 67;
+        //        position.y -= 83;
     }
 
     return tilePositions;
@@ -89,60 +89,35 @@ std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
 
 std::array<std::unique_ptr<calculator::Tile>, 19>& TilesLayout::createTiles()
 {
-    const auto tilePositions = createTilePositions();
+    const auto& tilePositions = createTilePositions();
 
-    // TODO: function for call createTile with enum
     static std::array<std::unique_ptr<calculator::Tile>, 19> tilesInit = {
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number0)],
-                                                   toString(LayoutCharacter::Number0),
-                                                   LayoutCharacter::Number0),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number1)],
-                                                   toString(LayoutCharacter::Number1),
-                                                   LayoutCharacter::Number1),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number2)],
-                                                   toString(LayoutCharacter::Number2),
-                                                   LayoutCharacter::Number2),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number3)],
-                                                   toString(LayoutCharacter::Number3),
-                                                   LayoutCharacter::Number3),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number4)],
-                                                   toString(LayoutCharacter::Number4),
-                                                   LayoutCharacter::Number4),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number5)],
-                                                   toString(LayoutCharacter::Number5),
-                                                   LayoutCharacter::Number5),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number6)],
-                                                   toString(LayoutCharacter::Number6),
-                                                   LayoutCharacter::Number6),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number7)],
-                                                   toString(LayoutCharacter::Number7),
-                                                   LayoutCharacter::Number7),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number8)],
-                                                   toString(LayoutCharacter::Number8),
-                                                   LayoutCharacter::Number8),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Number9)],
-                                                   toString(LayoutCharacter::Number9),
-                                                   LayoutCharacter::Number9),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Plus)],
-                                                   toString(LayoutCharacter::Plus), LayoutCharacter::Plus),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Minus)],
-                                                   toString(LayoutCharacter::Minus), LayoutCharacter::Minus),
-        calculator::TileCreator::createRegularTile(
-            tilePositions[static_cast<int>(LayoutCharacter::Multiplication)],
-            toString(LayoutCharacter::Multiplication), LayoutCharacter::Multiplication),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Division)],
-                                                   toString(LayoutCharacter::Division),
-                                                   LayoutCharacter::Division),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Equal)],
-                                                   toString(LayoutCharacter::Equal), LayoutCharacter::Equal),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Remove)],
-                                                   toString(LayoutCharacter::Remove),
-                                                   LayoutCharacter::Remove),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Clear)],
-                                                   toString(LayoutCharacter::Clear), LayoutCharacter::Clear),
-        calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(LayoutCharacter::Dot)],
-                                                   toString(LayoutCharacter::Dot), LayoutCharacter::Dot),
+        createRegularTile(LayoutCharacter::Number0),
+        createRegularTile(LayoutCharacter::Number1),
+        createRegularTile(LayoutCharacter::Number2),
+        createRegularTile(LayoutCharacter::Number3),
+        createRegularTile(LayoutCharacter::Number4),
+        createRegularTile(LayoutCharacter::Number5),
+        createRegularTile(LayoutCharacter::Number6),
+        createRegularTile(LayoutCharacter::Number7),
+        createRegularTile(LayoutCharacter::Number8),
+        createRegularTile(LayoutCharacter::Number9),
+        createRegularTile(LayoutCharacter::Plus),
+        createRegularTile(LayoutCharacter::Minus),
+        createRegularTile(LayoutCharacter::Multiplication),
+        createRegularTile(LayoutCharacter::Division),
+        createRegularTile(LayoutCharacter::Equal),
+        createRegularTile(LayoutCharacter::Remove),
+        createRegularTile(LayoutCharacter::Clear),
+        createRegularTile(LayoutCharacter::Dot),
         calculator::TileCreator::createResultTile(tilePositions[resultTileIndex])};
 
     return tilesInit;
+}
+
+std::unique_ptr<calculator::Tile> TilesLayout::createRegularTile(calculator::LayoutCharacter layoutCharacter)
+{
+    const auto& tilePositions = createTilePositions();
+    return calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(layoutCharacter)],
+                                                      toString(layoutCharacter), layoutCharacter);
 }

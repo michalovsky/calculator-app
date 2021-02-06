@@ -19,6 +19,5 @@ public:
 private:
     std::string value;
     sf::Text text;
-    sf::Font font;
 };
 }

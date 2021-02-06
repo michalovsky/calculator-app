@@ -26,6 +26,7 @@ public:
 private:
     static std::array<sf::Vector2f, 19>& createTilePositions();
     static std::array<std::unique_ptr<calculator::Tile>, 19>& createTiles();
+    static std::unique_ptr<calculator::Tile> createRegularTile(calculator::LayoutCharacter);
 
     const std::array<sf::Vector2f, 19>& tilePositions;
     const std::array<std::unique_ptr<calculator::Tile>, 19>& tiles;

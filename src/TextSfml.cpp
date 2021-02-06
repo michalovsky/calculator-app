@@ -1,8 +1,10 @@
 #include "TextSfml.h"
 
+#include <iostream>
 #include <utility>
 
 #include "FontLoader.h"
+#include "FontStorage.h"
 #include "GetProjectPath.h"
 
 namespace calculator
@@ -10,15 +12,14 @@ namespace calculator
 namespace
 {
 const std::string fontName = "arial.ttf";
+const auto resourcesDirectory = utils::getProjectPath("calculator-app") + "resources/";
+const auto fontFilePath = resourcesDirectory + fontName;
 }
 
-TextSfml::TextSfml(const sf::Vector2f& positionInit, std::string valueInit, unsigned int characterSizeInit) : value{std::move(valueInit)}
+TextSfml::TextSfml(const sf::Vector2f& positionInit, std::string valueInit, unsigned int characterSizeInit)
+    : value{std::move(valueInit)}
 {
-    const auto resourcesDirectory = utils::getProjectPath("calculator-app") + "resources/";
-    const auto fontFilePath = resourcesDirectory + fontName;
-    FontLoader::load(font, fontFilePath);
-
-    text.setFont(font);
+    text.setFont(FontStorage::getFont(fontFilePath));
     text.setCharacterSize(characterSizeInit);
     text.setFillColor(sf::Color::Black);
     text.setString(value);

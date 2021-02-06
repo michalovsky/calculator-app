@@ -4,6 +4,7 @@ set(SOURCES
         GetProjectPath.cpp
         UserInputReader.cpp
         FontLoader.cpp
+        FontStorage.cpp
         TextSfml.cpp
         RectangleSfml.cpp
         Tile.cpp

@@ -1,5 +1,7 @@
 #include "RectangleSfml.h"
 
+#include <iostream>
+
 namespace calculator
 {
 
