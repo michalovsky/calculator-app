@@ -1,6 +1,5 @@
 #include "InteractionHandler.h"
 
-
 namespace calculator
 {
 void InteractionHandler::handleMouseOverOnTilesLayout(TilesLayout& tilesLayout, sf::Vector2f mousePosition)
@@ -11,11 +10,10 @@ void InteractionHandler::handleMouseOverOnTilesLayout(TilesLayout& tilesLayout, 
     tilesLayout.changeTilesColorOnIntersection(mouseOverColor, mousePosition);
 }
 
-std::optional<IntersectedTileInformation> InteractionHandler::getClickedTileInformation(TilesLayout& tilesLayout, sf::Vector2f mousePosition)
+std::optional<IntersectedTileInformation>
+InteractionHandler::getClickedTileInformation(TilesLayout& tilesLayout, sf::Vector2f mousePosition)
 {
     return tilesLayout.getInformationAboutTileBeingIntersected(mousePosition);
 }
-
-
 
 }

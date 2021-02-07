@@ -3,8 +3,8 @@
 #include <array>
 #include <memory>
 
-#include "Tile.h"
 #include "IntersectedTileInformation.h"
+#include "Tile.h"
 
 namespace calculator
 {
@@ -16,7 +16,8 @@ public:
     void updateResult(const std::string& result);
     void changeTilesColor(sf::Color);
     void changeTilesColorOnIntersection(sf::Color, const sf::Vector2f& position);
-    std::optional<IntersectedTileInformation> getInformationAboutTileBeingIntersected(const sf::Vector2f& position);
+    std::optional<IntersectedTileInformation>
+    getInformationAboutTileBeingIntersected(const sf::Vector2f& position);
     void draw(sf::RenderWindow&);
 
 private:

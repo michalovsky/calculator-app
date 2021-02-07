@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics/RenderWindow.hpp>
 
+#include "LayoutCharacter.h"
 #include "RectangleSfml.h"
 #include "TextSfml.h"
-#include "LayoutCharacter.h"
 
 namespace calculator
 {

@@ -5,8 +5,7 @@
 namespace calculator
 {
 
-RectangleSfml::RectangleSfml(const sf::Vector2f& position, const sf::Vector2f& size,
-                             float outlineThickness)
+RectangleSfml::RectangleSfml(const sf::Vector2f& position, const sf::Vector2f& size, float outlineThickness)
 {
     rect.setSize(size);
     rect.setFillColor(sf::Color::White);

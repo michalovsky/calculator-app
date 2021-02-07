@@ -1,7 +1,8 @@
+#include "FontStorage.h"
+
 #include <iostream>
 
 #include "FontLoader.h"
-#include "FontStorage.h"
 #include "exceptions/CannotAccessFontFile.h"
 #include "exceptions/FontNotAvailable.h"
 

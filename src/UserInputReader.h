@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <optional>
 #include <memory>
+#include <optional>
 
 #include "InputKey.h"
 

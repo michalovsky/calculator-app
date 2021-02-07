@@ -1,7 +1,8 @@
 #pragma once
 
-#include "LayoutCharacter.h"
 #include <string>
+
+#include "LayoutCharacter.h"
 
 namespace calculator
 {

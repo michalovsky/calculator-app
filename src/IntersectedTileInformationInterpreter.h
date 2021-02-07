@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+
 #include "Buffer.h"
 #include "IntersectedTileInformation.h"
 #include "OperationSolver.h"

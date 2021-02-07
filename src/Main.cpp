@@ -5,5 +5,5 @@ int main()
     auto calculator = calculator::CalculatorFactory::createCalculator();
     calculator->run();
 
-	return 0;
+    return 0;
 }
