@@ -1,28 +1,34 @@
 #pragma once
+
 #include <vector>
 #include <string>
 #include <iostream>
 
 //Buffer keeps input in strings, example: words[0]="7.3" words[1]="+" words[2]="2"
 
+namespace calculator
+{
 class Buffer
 {
 public:
-	Buffer() = delete;
-	static std::string getCurrentWord();
-	static void setCurrentWordResult(bool);
-	static bool isCurrentWordResult();
-	static void addToNewWord(std::string);
-	static void addToExistingWord(std::string);
-	static void clearCurrentWord();
-	static void clearWords();
-	static void removeLastWord();
-	static std::string getWordsAsLine();
-	static std::vector<std::string> getWords();
+    Buffer();
+
+    std::string getCurrentWord();
+    void setCurrentWordAsResult(bool currentWordIsResult);
+    bool isCurrentWordResult();
+    void addToNewWord(const std::string&);
+    void addToExistingWord(const std::string&);
+    void clearCurrentWord();
+    void clearWords();
+    void removeLastWord();
+    std::string getWordsAsLine();
+    std::vector<std::string> getWords();
+
 private:
-	static std::vector<std::string> words;
-	static std::string wordsAsLine;
-	static int currentWordIndex;
-	static bool currentWordResult;
+    std::vector<std::string> words;
+    std::string wordsAsLine;
+    int currentWordIndex;
+    bool currentWordResult;
 };
 
+}

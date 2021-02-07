@@ -1,16 +1,17 @@
 #pragma once
 
+#include <memory>
 #include "Buffer.h"
-#include "OperationSolver.h"
-#include "TilesLayout.h"
+#include "IntersectedTileInformation.h"
 
 namespace calculator
 {
-class Interaction
+class IntersectedTileInformationInterpreter
 {
 public:
-    void handleMouseOverOnTilesLayout(TilesLayout& tilesLayout, sf::Vector2f mousePosition);
-    void handleMouseClickOnTilesLayout(TilesLayout& tilesLayout, sf::Vector2f mousePosition);
+    IntersectedTileInformationInterpreter(std::shared_ptr<Buffer>);
+
+    void interpretTileInformation(const IntersectedTileInformation&);
 
 private:
     bool layoutCharacterIsNumber(LayoutCharacter);
@@ -25,6 +26,7 @@ private:
     void handleDot(const std::string& value);
     void handleClear();
     void handleRemove();
-};
 
+    std::shared_ptr<Buffer> buffer;
+};
 }

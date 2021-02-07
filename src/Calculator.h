@@ -4,15 +4,17 @@
 #include <vector>
 
 #include "Buffer.h"
-#include "Interaction.h"
+#include "InteractionHandler.h"
 #include "TilesLayout.h"
 #include "UserInputReader.h"
+#include "IntersectedTileInformationInterpreter.h"
 
 class Calculator
 {
 public:
 	Calculator();
 	~Calculator();
+
 	void run();
 private:
 	void clearWindow();
@@ -23,6 +25,8 @@ private:
 	sf::RenderWindow * window;
 	std::unique_ptr<TilesLayout> tiles;
     std::unique_ptr<calculator::UserInputReader> userInputReader;
-    std::unique_ptr<calculator::Interaction> interaction;
+    std::shared_ptr<calculator::Buffer> buffer;
+    std::unique_ptr<calculator::InteractionHandler> interactionHandler;
+    std::unique_ptr<calculator::IntersectedTileInformationInterpreter> tileInformationInterpreter;
 };
 

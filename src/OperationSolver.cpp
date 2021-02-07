@@ -7,7 +7,7 @@ std::string OperationSolver::solve(std::vector<std::string> words)
 
 	for (auto & word : words)
 	{
-		localWords.push_back(word);
+		localWords.emplace_back(word);
 	}
 
 	while (checkIfStringExists(localWords, "x") || checkIfStringExists(localWords, "/"))

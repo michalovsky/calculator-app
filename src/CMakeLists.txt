@@ -10,8 +10,9 @@ set(SOURCES
         Tile.cpp
         TileCreator.cpp
         TilesLayout.cpp
-        Interaction.cpp
+        InteractionHandler.cpp
         Buffer.cpp
+        IntersectedTileInformationInterpreter.cpp
         Calculator.cpp
         OperationSolver.cpp
         Main.cpp
