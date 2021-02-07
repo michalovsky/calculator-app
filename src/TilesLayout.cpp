@@ -32,7 +32,7 @@ TilesLayout::TilesLayout() : tilePositions{createTilePositions()}, tiles{createT
 
 void TilesLayout::updateResult(const std::string& resultLine)
 {
-    tiles[resultTileIndex]->update(tilePositions[resultTileIndex], resultLine);
+    tiles[resultTileIndex]->updateLabel(resultLine);
 }
 
 void TilesLayout::changeTilesColor(sf::Color color)
@@ -94,7 +94,6 @@ std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
 std::array<std::unique_ptr<calculator::Tile>, 19>& TilesLayout::createTiles()
 {
     const auto& tilePositions = createTilePositions();
-
     static std::array<std::unique_ptr<calculator::Tile>, 19> tilesInit = {
         createRegularTile(LayoutCharacter::Number0),
         createRegularTile(LayoutCharacter::Number1),
@@ -115,7 +114,6 @@ std::array<std::unique_ptr<calculator::Tile>, 19>& TilesLayout::createTiles()
         createRegularTile(LayoutCharacter::Clear),
         createRegularTile(LayoutCharacter::Dot),
         calculator::TileCreator::createResultTile(tilePositions[resultTileIndex])};
-
     return tilesInit;
 }
 

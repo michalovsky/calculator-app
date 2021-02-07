@@ -26,14 +26,8 @@ TextSfml::TextSfml(const sf::Vector2f& positionInit, std::string valueInit, unsi
     text.setPosition(positionInit);
 }
 
-void TextSfml::update(const sf::Vector2f& position)
+void TextSfml::updateValue(const std::string& updatedValue)
 {
-    text.setPosition(position);
-}
-
-void TextSfml::update(const sf::Vector2f& position, const std::string& updatedValue)
-{
-    text.setPosition(position);
     text.setString(updatedValue);
 }
 

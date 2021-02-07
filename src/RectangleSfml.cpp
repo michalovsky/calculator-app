@@ -15,11 +15,6 @@ RectangleSfml::RectangleSfml(const sf::Vector2f& position, const sf::Vector2f& s
     rect.setPosition(position);
 }
 
-void RectangleSfml::updatePosition(const sf::Vector2f& position)
-{
-    rect.setPosition(position);
-}
-
 void RectangleSfml::changeColor(sf::Color color)
 {
     rect.setFillColor(color);

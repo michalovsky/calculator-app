@@ -15,8 +15,7 @@ public:
          unsigned int characterSize, const sf::Vector2f& textOffsetInit,
          std::optional<LayoutCharacter> layoutCharacter);
 
-    void update(const sf::Vector2f& updatedPosition);
-    void update(const sf::Vector2f& updatedPosition, const std::string& updatedLabel);
+    void updateLabel(const std::string& updatedLabel);
     void changeColor(sf::Color);
     std::string getText() const;
     std::optional<LayoutCharacter> getLayoutCharacter() const;

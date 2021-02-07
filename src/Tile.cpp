@@ -16,16 +16,9 @@ Tile::Tile(const sf::Vector2f& position, const sf::Vector2f& size, float outline
 {
 }
 
-void Tile::update(const sf::Vector2f& updatedPosition)
+void Tile::updateLabel(const std::string& updatedLabel)
 {
-    rectangle.updatePosition(updatedPosition);
-    text.update(updatedPosition + textOffset);
-}
-
-void Tile::update(const sf::Vector2f& updatedPosition, const std::string& updatedLabel)
-{
-    rectangle.updatePosition(updatedPosition);
-    text.update(updatedPosition + textOffset, updatedLabel);
+    text.updateValue(updatedLabel);
 }
 
 void Tile::changeColor(sf::Color color)

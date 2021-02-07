@@ -11,8 +11,7 @@ class TextSfml
 public:
     TextSfml(const sf::Vector2f& positionInit, std::string valueInit, unsigned int characterSizeInit);
 
-    void update(const sf::Vector2f& position);
-    void update(const sf::Vector2f& position, const std::string& updatedValue);
+    void updateValue(const std::string& updatedValue);
     std::string getValue() const;
     void draw(sf::RenderWindow&);
 

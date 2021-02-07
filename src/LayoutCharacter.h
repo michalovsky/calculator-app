@@ -46,7 +46,7 @@ inline std::string toString(LayoutCharacter layoutCharacter)
         {LayoutCharacter::Number6, "6"},        {LayoutCharacter::Number7, "7"},
         {LayoutCharacter::Number8, "8"},        {LayoutCharacter::Number9, "9"},
         {LayoutCharacter::Plus, "+"},           {LayoutCharacter::Minus, "-"},
-        {LayoutCharacter::Multiplication, "*"}, {LayoutCharacter::Division, "/"},
+        {LayoutCharacter::Multiplication, "x"}, {LayoutCharacter::Division, "/"},
         {LayoutCharacter::Equal, "="},          {LayoutCharacter::Remove, "<-"},
         {LayoutCharacter::Clear, "C"},          {LayoutCharacter::Dot, "."}};
 
