@@ -9,23 +9,14 @@ namespace
 {
 struct Token
 {
-    Token& operator=(const std::string& newValue)
-    {
-        value = newValue;
-        return *this;
-    }
-
     std::string value;
     bool toRemove{false};
 };
 
 std::vector<Token> createTokensFromLines(const std::vector<std::string>& tokensLines);
-void handleTokens(std::vector<Token>& tokens, const std::function<double(double, double)>&,
-                  const std::string& operatorSign);
-void handleMultiplicationTokens(std::vector<Token>& tokens);
-void handleDivisionTokens(std::vector<Token>& tokens);
-void handlePlusTokens(std::vector<Token>& tokens);
-void handleMinusTokens(std::vector<Token>& tokens);
+void handleMultiplicationDivisionTokens(std::vector<Token>& tokens);
+void handlePlusMinusTokens(std::vector<Token>& tokens);
+void clearRedundantTokens(std::vector<Token>& tokens);
 std::string getResultFromTokens(std::vector<Token>& tokens);
 std::string roundNumber(const std::string& numberToRound);
 bool tokensContainGivenToken(std::vector<Token>& tokens, const std::string& givenToken);
@@ -41,10 +32,8 @@ std::string OperationSolver::solve(const std::vector<std::string>& tokensLines)
 {
     auto tokens = createTokensFromLines(tokensLines);
 
-    handleMultiplicationTokens(tokens);
-    handleDivisionTokens(tokens);
-    handlePlusTokens(tokens);
-    handleMinusTokens(tokens);
+    handleMultiplicationDivisionTokens(tokens);
+    handlePlusMinusTokens(tokens);
 
     return getResultFromTokens(tokens);
 }
@@ -62,50 +51,68 @@ std::vector<Token> createTokensFromLines(const std::vector<std::string>& tokensL
     return tokens;
 }
 
-void handleTokens(std::vector<Token>& tokens, const std::function<double(double, double)>& operation,
-                  const std::string& operatorSign)
+void handleToken(std::vector<Token>& tokens, std::vector<Token>::size_type tokenIndex,
+                 const std::function<double(double, double)>& operation)
 {
-    while (tokensContainGivenToken(tokens, operatorSign))
+    tokens[tokenIndex - 1].toRemove = true;
+    tokens[tokenIndex + 1].toRemove = true;
+    const auto value1 = std::stod(tokens[tokenIndex - 1].value);
+    const auto value2 = std::stod(tokens[tokenIndex + 1].value);
+    tokens[tokenIndex].value = std::to_string(operation(value1, value2));
+}
+
+void handleMultiplicationDivisionTokens(std::vector<Token>& tokens)
+{
+    while (tokensContainGivenToken(tokens, multiplicationSign) ||
+           tokensContainGivenToken(tokens, divisionSign))
     {
-        int tokenIndex = 0;
-        for (auto& token : tokens)
+        for (auto tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
         {
-            if (token.value == operatorSign)
+            auto tokenValue = tokens[tokenIndex].value;
+            if (tokenValue == multiplicationSign)
             {
-                tokens[tokenIndex - 1].toRemove = true;
-                tokens[tokenIndex + 1].toRemove = true;
-                auto value1 = std::stod(tokens[tokenIndex - 1].value);
-                auto value2 = std::stod(tokens[tokenIndex + 1].value);
-                token = std::to_string(operation(value1, value2));
+                handleToken(tokens, tokenIndex, std::multiplies<>());
                 break;
             }
-            tokenIndex++;
+            else if (tokenValue == divisionSign)
+            {
+                handleToken(tokens, tokenIndex, std::divides<>());
+                break;
+            }
         }
 
-        tokens.erase(
-            std::remove_if(tokens.begin(), tokens.end(), [](const Token& token) { return token.toRemove; }),
-            tokens.end());
+        clearRedundantTokens(tokens);
     }
 }
 
-void handleMultiplicationTokens(std::vector<Token>& tokens)
+void handlePlusMinusTokens(std::vector<Token>& tokens)
 {
-    handleTokens(tokens, std::multiplies<>(), multiplicationSign);
+    while (tokensContainGivenToken(tokens, plusSign) || tokensContainGivenToken(tokens, minusSign))
+    {
+        for (auto tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
+        {
+            auto tokenValue = tokens[tokenIndex].value;
+            if (tokenValue == plusSign)
+            {
+                handleToken(tokens, tokenIndex, std::plus<>());
+                break;
+            }
+            else if (tokenValue == minusSign)
+            {
+                handleToken(tokens, tokenIndex, std::minus<>());
+                break;
+            }
+        }
+
+        clearRedundantTokens(tokens);
+    }
 }
 
-void handleDivisionTokens(std::vector<Token>& tokens)
+void clearRedundantTokens(std::vector<Token>& tokens)
 {
-    handleTokens(tokens, std::divides<>(), divisionSign);
-}
-
-void handlePlusTokens(std::vector<Token>& tokens)
-{
-    handleTokens(tokens, std::plus<>(), plusSign);
-}
-
-void handleMinusTokens(std::vector<Token>& tokens)
-{
-    handleTokens(tokens, std::minus<>(), minusSign);
+    tokens.erase(
+        std::remove_if(tokens.begin(), tokens.end(), [](const Token& token) { return token.toRemove; }),
+        tokens.end());
 }
 
 std::string getResultFromTokens(std::vector<Token>& tokens)

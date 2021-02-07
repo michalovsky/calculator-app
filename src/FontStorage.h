@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <SFML/Graphics/Font.hpp>
 
 namespace calculator
 {

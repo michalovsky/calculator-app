@@ -29,14 +29,6 @@ enum class LayoutCharacter
     Dot
 };
 
-const std::vector<LayoutCharacter> allLayoutCharacters{
-    LayoutCharacter::Number0,        LayoutCharacter::Number1,  LayoutCharacter::Number2,
-    LayoutCharacter::Number3,        LayoutCharacter::Number4,  LayoutCharacter::Number5,
-    LayoutCharacter::Number6,        LayoutCharacter::Number7,  LayoutCharacter::Number8,
-    LayoutCharacter::Number9,        LayoutCharacter::Plus,     LayoutCharacter::Minus,
-    LayoutCharacter::Multiplication, LayoutCharacter::Division, LayoutCharacter::Equal,
-    LayoutCharacter::Remove,         LayoutCharacter::Clear,    LayoutCharacter::Dot};
-
 inline std::string toString(LayoutCharacter layoutCharacter)
 {
     std::unordered_map<LayoutCharacter, std::string> layoutCharacterToString{
