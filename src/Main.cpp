@@ -1,9 +1,9 @@
-#include "Calculator.h"
+#include "CalculatorFactory.h"
 
 int main()
 {
-	Calculator calc;
-	calc.run();
+    auto calculator = calculator::CalculatorFactory::createCalculator();
+    calculator->run();
 
 	return 0;
 }

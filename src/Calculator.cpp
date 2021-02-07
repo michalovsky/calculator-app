@@ -1,34 +1,33 @@
 #include "Calculator.h"
 
-
-
-Calculator::Calculator()
+namespace calculator
 {
-    window = new sf::RenderWindow(sf::VideoMode(300, 480), "Calculator");
-    window->setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - window->getSize().x / 2, sf::VideoMode::getDesktopMode().height / 2 - window->getSize().y / 2));
+
+Calculator::Calculator(std::shared_ptr<sf::RenderWindow> renderWindowInit,
+                       std::unique_ptr<TilesLayout> layoutInit,
+                       std::unique_ptr<UserInputReader> inputReaderInit, std::shared_ptr<Buffer> bufferInit,
+                       std::unique_ptr<InteractionHandler> interactionHandlerInit,
+                       std::unique_ptr<IntersectedTileInformationInterpreter> interpreterInit)
+    : window{std::move(renderWindowInit)},
+      tiles{std::move(layoutInit)},
+      userInputReader{std::move(inputReaderInit)},
+      buffer{std::move(bufferInit)},
+      interactionHandler{std::move(interactionHandlerInit)},
+      tileInformationInterpreter{std::move(interpreterInit)}
+{
+    window->setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width / 2 - window->getSize().x / 2,
+                                     sf::VideoMode::getDesktopMode().height / 2 - window->getSize().y / 2));
     window->setFramerateLimit(60);
-	tiles = std::make_unique<TilesLayout>();
-    buffer = std::make_shared<calculator::Buffer>();
-    interactionHandler = std::make_unique<calculator::InteractionHandler>();
-    tileInformationInterpreter = std::make_unique<calculator::IntersectedTileInformationInterpreter>(buffer);
-
-    userInputReader = std::make_unique<calculator::UserInputReader>(*window);
-}
-
-
-Calculator::~Calculator()
-{
-	delete window;
 }
 
 void Calculator::run()
 {
-	while (window->isOpen())
-	{
-		clearWindow();
+    while (window->isOpen())
+    {
+        clearWindow();
         update();
-		drawWindow();
-	}
+        drawWindow();
+    }
 }
 
 void Calculator::update()
@@ -39,7 +38,8 @@ void Calculator::update()
 
     if (inputKey == calculator::InputKey::MouseLeft)
     {
-        if (const auto clickedTileInfo = interactionHandler->getClickedTileInformation(*tiles, userInputReader->readMousePosition()))
+        if (const auto clickedTileInfo =
+                interactionHandler->getClickedTileInformation(*tiles, userInputReader->readMousePosition()))
         {
             tileInformationInterpreter->interpretTileInformation(*clickedTileInfo);
         }
@@ -49,12 +49,12 @@ void Calculator::update()
         closeWindow();
     }
 
-	tiles->updateResult(buffer->getWordsAsLine());
+    tiles->updateResult(buffer->getWordsAsLine());
 }
 
 void Calculator::clearWindow()
 {
-	window->clear(sf::Color::White);
+    window->clear(sf::Color::White);
 }
 
 void Calculator::closeWindow()
@@ -65,5 +65,7 @@ void Calculator::closeWindow()
 void Calculator::drawWindow()
 {
     tiles->draw(*window);
-	window->display();
+    window->display();
+}
+
 }

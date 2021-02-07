@@ -6,11 +6,11 @@ Buffer::Buffer() : words{"0"}, currentWordIndex{0}, currentWordResult{false} {}
 
 std::string Buffer::getCurrentWord()
 {
-    if (currentWordIndex >= 0 && currentWordIndex < (int)words.size())
+    if (currentWordIndex >= 0 && currentWordIndex < words.size())
     {
         return words[currentWordIndex];
     }
-    return std::string();
+    return {};
 }
 
 void Buffer::setCurrentWordAsResult(bool currentWordIsResult)
@@ -25,15 +25,15 @@ bool Buffer::isCurrentWordResult()
 
 void Buffer::removeLastWord()
 {
-    if (currentWordIndex >= 0 && currentWordIndex < (int)words.size())
+    if (currentWordIndex >= 0 && currentWordIndex < words.size())
     {
-        if ((int)words[currentWordIndex].size() == 1)
+        if (words[currentWordIndex].size() == 1)
         {
-            words[currentWordIndex] = "";
+            words[currentWordIndex].clear();
         }
         else
         {
-            int wordSize = (int)words[currentWordIndex].size();
+            const auto wordSize = words[currentWordIndex].size();
             words[currentWordIndex] = words[currentWordIndex].substr(0, wordSize - 1);
         }
     }
@@ -41,7 +41,7 @@ void Buffer::removeLastWord()
 
 void Buffer::addToExistingWord(const std::string& character)
 {
-    if (currentWordIndex >= 0 && currentWordIndex < (int)words.size())
+    if (currentWordIndex >= 0 && currentWordIndex < words.size())
     {
         words[currentWordIndex] += character;
     }
@@ -49,9 +49,9 @@ void Buffer::addToExistingWord(const std::string& character)
 
 void Buffer::clearCurrentWord()
 {
-    if (currentWordIndex >= 0 && currentWordIndex < (int)words.size())
+    if (currentWordIndex >= 0 && currentWordIndex < words.size())
     {
-        words[currentWordIndex] = "";
+        words[currentWordIndex].clear();
     }
 }
 
@@ -70,12 +70,12 @@ void Buffer::clearWords()
     currentWordIndex = 0;
     words.emplace_back("");
 
-    wordsAsLine = "";
+    wordsAsLine.clear();
 }
 
 std::string Buffer::getWordsAsLine()
 {
-    wordsAsLine = "";
+    wordsAsLine.clear();
     for (auto& str : words)
     {
         wordsAsLine += str;

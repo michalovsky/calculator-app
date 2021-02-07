@@ -1,32 +1,33 @@
 #pragma once
-#include <iostream>
-#include <memory>
-#include <vector>
 
 #include "Buffer.h"
 #include "InteractionHandler.h"
+#include "IntersectedTileInformationInterpreter.h"
 #include "TilesLayout.h"
 #include "UserInputReader.h"
-#include "IntersectedTileInformationInterpreter.h"
 
+namespace calculator
+{
 class Calculator
 {
 public:
-	Calculator();
-	~Calculator();
+    Calculator(std::shared_ptr<sf::RenderWindow>, std::unique_ptr<TilesLayout>,
+               std::unique_ptr<UserInputReader>, std::shared_ptr<Buffer>, std::unique_ptr<InteractionHandler>,
+               std::unique_ptr<IntersectedTileInformationInterpreter>);
 
-	void run();
+    void run();
+
 private:
-	void clearWindow();
-	void update();
-	void closeWindow();
-	void drawWindow();
+    void clearWindow();
+    void update();
+    void closeWindow();
+    void drawWindow();
 
-	sf::RenderWindow * window;
-	std::unique_ptr<TilesLayout> tiles;
-    std::unique_ptr<calculator::UserInputReader> userInputReader;
-    std::shared_ptr<calculator::Buffer> buffer;
-    std::unique_ptr<calculator::InteractionHandler> interactionHandler;
-    std::unique_ptr<calculator::IntersectedTileInformationInterpreter> tileInformationInterpreter;
+    std::shared_ptr<sf::RenderWindow> window;
+    std::unique_ptr<TilesLayout> tiles;
+    std::unique_ptr<UserInputReader> userInputReader;
+    std::shared_ptr<Buffer> buffer;
+    std::unique_ptr<InteractionHandler> interactionHandler;
+    std::unique_ptr<IntersectedTileInformationInterpreter> tileInformationInterpreter;
 };
-
+}

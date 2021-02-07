@@ -3,8 +3,8 @@
 #include "LayoutCharacter.h"
 #include "TileCreator.h"
 
-using namespace calculator;
-
+namespace calculator
+{
 namespace
 {
 const auto number0Position = sf::Vector2f{78, 417};
@@ -91,10 +91,10 @@ std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
     return tilePositions;
 }
 
-std::array<std::unique_ptr<calculator::Tile>, 19>& TilesLayout::createTiles()
+std::array<std::unique_ptr<Tile>, 19>& TilesLayout::createTiles()
 {
     const auto& tilePositions = createTilePositions();
-    static std::array<std::unique_ptr<calculator::Tile>, 19> tilesInit = {
+    static std::array<std::unique_ptr<Tile>, 19> tilesInit = {
         createRegularTile(LayoutCharacter::Number0),
         createRegularTile(LayoutCharacter::Number1),
         createRegularTile(LayoutCharacter::Number2),
@@ -113,13 +113,14 @@ std::array<std::unique_ptr<calculator::Tile>, 19>& TilesLayout::createTiles()
         createRegularTile(LayoutCharacter::Remove),
         createRegularTile(LayoutCharacter::Clear),
         createRegularTile(LayoutCharacter::Dot),
-        calculator::TileCreator::createResultTile(tilePositions[resultTileIndex])};
+        TileCreator::createResultTile(tilePositions[resultTileIndex])};
     return tilesInit;
 }
 
-std::unique_ptr<calculator::Tile> TilesLayout::createRegularTile(calculator::LayoutCharacter layoutCharacter)
+std::unique_ptr<Tile> TilesLayout::createRegularTile(LayoutCharacter layoutCharacter)
 {
     const auto& tilePositions = createTilePositions();
-    return calculator::TileCreator::createRegularTile(tilePositions[static_cast<int>(layoutCharacter)],
-                                                      toString(layoutCharacter), layoutCharacter);
+    return TileCreator::createRegularTile(tilePositions[static_cast<int>(layoutCharacter)],
+                                          toString(layoutCharacter), layoutCharacter);
+}
 }

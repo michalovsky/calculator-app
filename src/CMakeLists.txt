@@ -13,8 +13,9 @@ set(SOURCES
         InteractionHandler.cpp
         Buffer.cpp
         IntersectedTileInformationInterpreter.cpp
-        Calculator.cpp
         OperationSolver.cpp
+        Calculator.cpp
+        CalculatorFactory.cpp
         Main.cpp
         )
 

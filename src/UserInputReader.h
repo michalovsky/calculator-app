@@ -1,7 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <optional>
+#include <memory>
 
 #include "InputKey.h"
 
@@ -10,12 +11,12 @@ namespace calculator
 class UserInputReader
 {
 public:
-    UserInputReader(sf::RenderWindow&);
+    UserInputReader(std::shared_ptr<sf::RenderWindow>);
 
     std::optional<InputKey> readInputKey() const;
     sf::Vector2f readMousePosition() const;
 
 private:
-    sf::RenderWindow& window;
+    std::shared_ptr<sf::RenderWindow> window;
 };
 }
