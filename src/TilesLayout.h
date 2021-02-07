@@ -17,7 +17,7 @@ class TilesLayout
 public:
     TilesLayout();
 
-    void update(const std::string& resultLine);
+    void updateResult(const std::string& result);
     void changeTilesColor(sf::Color);
     void changeTilesColorOnIntersection(sf::Color, const sf::Vector2f& position);
     std::optional<IntersectedTileInformation> getInformationAboutTileBeingIntersected(const sf::Vector2f& position);

@@ -1,27 +1,38 @@
 #include "TilesLayout.h"
 
-#include <iostream>
-
 #include "LayoutCharacter.h"
 #include "TileCreator.h"
 
 using namespace calculator;
 
+namespace
+{
+const auto number0Position = sf::Vector2f{78, 417};
+const auto number1Position = sf::Vector2f{3, 352};
+const auto number2Position = sf::Vector2f{78, 352};
+const auto number3Position = sf::Vector2f{153, 352};
+const auto number4Position = sf::Vector2f{3, 287};
+const auto number5Position = sf::Vector2f{78, 287};
+const auto number6Position = sf::Vector2f{153, 287};
+const auto number7Position = sf::Vector2f{3, 222};
+const auto number8Position = sf::Vector2f{78, 222};
+const auto number9Position = sf::Vector2f{153, 222};
+const auto plusPosition = sf::Vector2f{228, 352};
+const auto minusPosition = sf::Vector2f{228, 287};
+const auto multiplicationPosition = sf::Vector2f{228, 222};
+const auto divisionPosition = sf::Vector2f{228, 157};
+const auto equalPosition = sf::Vector2f{228, 417};
+const auto removePosition = sf::Vector2f{153, 157};
+const auto clearPosition = sf::Vector2f{78, 157};
+const auto dotPosition = sf::Vector2f{153, 417};
+const auto resultPosition = sf::Vector2f{3, 50};
+}
+
 TilesLayout::TilesLayout() : tilePositions{createTilePositions()}, tiles{createTiles()} {}
 
-void TilesLayout::update(const std::string& resultLine)
+void TilesLayout::updateResult(const std::string& resultLine)
 {
-    for (int tileIndex = 0; tileIndex < tiles.size(); tileIndex++)
-    {
-        if (tileIndex == resultTileIndex)
-        {
-            tiles[tileIndex]->update(tilePositions[tileIndex], resultLine);
-        }
-        else
-        {
-            tiles[tileIndex]->update(tilePositions[tileIndex]);
-        }
-    }
+    tiles[resultTileIndex]->update(tilePositions[resultTileIndex], resultLine);
 }
 
 void TilesLayout::changeTilesColor(sf::Color color)
@@ -72,18 +83,11 @@ void TilesLayout::draw(sf::RenderWindow& window)
 std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
 {
     static std::array<sf::Vector2f, 19> tilePositions = {
-        sf::Vector2f{145, 500}, sf::Vector2f{70, 435},  sf::Vector2f{145, 435}, sf::Vector2f{220, 435},
-        sf::Vector2f{70, 370},  sf::Vector2f{145, 370}, sf::Vector2f{220, 370}, sf::Vector2f(70, 305),
-        sf::Vector2f(145, 305), sf::Vector2f(220, 305), sf::Vector2f(295, 435), sf::Vector2f(295, 370),
-        sf::Vector2f(295, 305), sf::Vector2f(295, 240), sf::Vector2f(295, 500), sf::Vector2f(220, 240),
-        sf::Vector2f(145, 240), sf::Vector2f(220, 500), sf::Vector2f(70, 103)};
-
-    for (auto& position : tilePositions)
-    {
-        //        position.x -= 67;
-        //        position.y -= 83;
-    }
-
+        number0Position,        number1Position,  number2Position, number3Position,
+        number4Position,        number5Position,  number6Position, number7Position,
+        number8Position,        number9Position,  plusPosition,    minusPosition,
+        multiplicationPosition, divisionPosition, equalPosition,   removePosition,
+        clearPosition,          dotPosition,      resultPosition};
     return tilePositions;
 }
 

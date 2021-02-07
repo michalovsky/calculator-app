@@ -18,7 +18,6 @@ Tile::Tile(const sf::Vector2f& position, const sf::Vector2f& size, float outline
 
 void Tile::update(const sf::Vector2f& updatedPosition)
 {
-    std::cout << updatedPosition.x << " " <<updatedPosition.y << std::endl;
     rectangle.updatePosition(updatedPosition);
     text.update(updatedPosition + textOffset);
 }

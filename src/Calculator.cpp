@@ -44,7 +44,7 @@ void Calculator::update(calculator::InputKey inputKey)
 {
 	Interaction::mouseOver(*tiles, userInputReader->readMousePosition());
 	Interaction::mouseClick(*tiles, userInputReader->readMousePosition(), (int)inputKey);
-	tiles->update(Buffer::getWordsAsLine());
+	tiles->updateResult(Buffer::getWordsAsLine());
 }
 
 void Calculator::clearWindow()
