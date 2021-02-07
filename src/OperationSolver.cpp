@@ -1,103 +1,144 @@
 #include "OperationSolver.h"
 
+#include <algorithm>
+#include <utility>
 
-std::string OperationSolver::solve(std::vector<std::string> words)
+namespace calculator
 {
-	std::vector<Word> localWords;
+namespace
+{
+struct Token
+{
+    Token& operator=(const std::string& newValue)
+    {
+        value = newValue;
+        return *this;
+    }
 
-	for (auto & word : words)
-	{
-		localWords.emplace_back(word);
-	}
+    std::string value;
+    bool toRemove{false};
+};
 
-	while (checkIfStringExists(localWords, "x") || checkIfStringExists(localWords, "/"))
-	{
-		int wordIndex = 0;
-		for (auto & word : localWords)
-		{
-			if (word.value == "x")
-			{
-				localWords[wordIndex - 1].toRemove = true;
-				localWords[wordIndex + 1].toRemove = true;
-				word = std::to_string(std::stod(localWords[wordIndex - 1].value) * std::stod(localWords[wordIndex + 1].value));
-				break;
-			}
-			else if (word.value == "/")
-			{
-				localWords[wordIndex - 1].toRemove = true;
-				localWords[wordIndex + 1].toRemove = true;
-				word = std::to_string(std::stod(localWords[wordIndex - 1].value) / std::stod(localWords[wordIndex + 1].value));
-				break;
-			}
-			wordIndex++;
-		}
+std::vector<Token> createTokensFromLines(const std::vector<std::string>& tokensLines);
+void handleTokens(std::vector<Token>& tokens, const std::function<double(double, double)>&,
+                  const std::string& operatorSign);
+void handleMultiplicationTokens(std::vector<Token>& tokens);
+void handleDivisionTokens(std::vector<Token>& tokens);
+void handlePlusTokens(std::vector<Token>& tokens);
+void handleMinusTokens(std::vector<Token>& tokens);
+std::string getResultFromTokens(std::vector<Token>& tokens);
+std::string roundNumber(const std::string& numberToRound);
+bool tokensContainGivenToken(std::vector<Token>& tokens, const std::string& givenToken);
 
-		localWords.erase(std::remove_if(localWords.begin(), localWords.end(), [](const Word & word) {return word.isToRemove(); }), localWords.end());
-	}
-
-	while (checkIfStringExists(localWords, "+") || checkIfStringExists(localWords, "-"))
-	{
-		int wordIndex = 0;
-		for (auto & word : localWords)
-		{
-			if (word.value == "+")
-			{
-				localWords[wordIndex - 1].toRemove = true;
-				localWords[wordIndex + 1].toRemove = true;
-				word = std::to_string(std::stod(localWords[wordIndex - 1].value) + std::stod(localWords[wordIndex + 1].value));
-				break;
-			}
-			else if (word.value == "-")
-			{
-				localWords[wordIndex - 1].toRemove = true;
-				localWords[wordIndex + 1].toRemove = true;
-				word = std::to_string(std::stod(localWords[wordIndex - 1].value) - std::stod(localWords[wordIndex + 1].value));
-				break;
-			}
-			wordIndex++;
-		}
-
-		localWords.erase(std::remove_if(localWords.begin(), localWords.end(), [](const Word & word) {return word.isToRemove(); }), localWords.end());
-	}
-
-	int resultIndex = 0, wordIndex = 0;
-	for (auto & word : localWords)
-	{
-		if (word.value != "")
-		{
-			resultIndex = wordIndex;
-		}
-		wordIndex++;
-	}
-
-	 std::string resultNumber = roundNumber(localWords[resultIndex].value);
-	 return resultNumber;
+const auto plusSign = "+";
+const auto minusSign = "-";
+const auto multiplicationSign = "x";
+const auto divisionSign = "/";
+const auto dotSign = ".";
 }
 
-bool OperationSolver::checkIfStringExists(std::vector<Word> & words, std::string str)
+std::string OperationSolver::solve(const std::vector<std::string>& tokensLines)
 {
-	for (auto & word : words)
-	{
-		if (word.value == str)
-		{
-			return true;
-		}
-	}
-	return false;
+    auto tokens = createTokensFromLines(tokensLines);
+
+    handleMultiplicationTokens(tokens);
+    handleDivisionTokens(tokens);
+    handlePlusTokens(tokens);
+    handleMinusTokens(tokens);
+
+    return getResultFromTokens(tokens);
 }
 
-std::string OperationSolver::roundNumber(std::string numberToRound)
+namespace
 {
-	std::size_t foundDot = numberToRound.find(".");
-
-	std::string roundedNumber = numberToRound;
-
-	if (foundDot != std::string::npos)
-	{
-		roundedNumber = roundedNumber.substr(0, foundDot + 3);
-	}
-
-	return roundedNumber;
+std::vector<Token> createTokensFromLines(const std::vector<std::string>& tokensLines)
+{
+    std::vector<Token> tokens;
+    tokens.reserve(tokensLines.size());
+    for (const auto& word : tokensLines)
+    {
+        tokens.push_back({word, false});
+    }
+    return tokens;
 }
 
+void handleTokens(std::vector<Token>& tokens, const std::function<double(double, double)>& operation,
+                  const std::string& operatorSign)
+{
+    while (tokensContainGivenToken(tokens, operatorSign))
+    {
+        int tokenIndex = 0;
+        for (auto& token : tokens)
+        {
+            if (token.value == operatorSign)
+            {
+                tokens[tokenIndex - 1].toRemove = true;
+                tokens[tokenIndex + 1].toRemove = true;
+                auto value1 = std::stod(tokens[tokenIndex - 1].value);
+                auto value2 = std::stod(tokens[tokenIndex + 1].value);
+                token = std::to_string(operation(value1, value2));
+                break;
+            }
+            tokenIndex++;
+        }
 
+        tokens.erase(
+            std::remove_if(tokens.begin(), tokens.end(), [](const Token& token) { return token.toRemove; }),
+            tokens.end());
+    }
+}
+
+void handleMultiplicationTokens(std::vector<Token>& tokens)
+{
+    handleTokens(tokens, std::multiplies<>(), multiplicationSign);
+}
+
+void handleDivisionTokens(std::vector<Token>& tokens)
+{
+    handleTokens(tokens, std::divides<>(), divisionSign);
+}
+
+void handlePlusTokens(std::vector<Token>& tokens)
+{
+    handleTokens(tokens, std::plus<>(), plusSign);
+}
+
+void handleMinusTokens(std::vector<Token>& tokens)
+{
+    handleTokens(tokens, std::minus<>(), minusSign);
+}
+
+std::string getResultFromTokens(std::vector<Token>& tokens)
+{
+    int resultIndex = 0;
+    for (int tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
+    {
+        if (not tokens[tokenIndex].value.empty())
+        {
+            resultIndex = tokenIndex;
+        }
+    }
+
+    return roundNumber(tokens[resultIndex].value);
+}
+
+std::string roundNumber(const std::string& numberToRound)
+{
+    std::size_t foundDot = numberToRound.find(dotSign);
+    std::string roundedNumber = numberToRound;
+
+    if (foundDot != std::string::npos)
+    {
+        roundedNumber = roundedNumber.substr(0, foundDot + 3);
+    }
+
+    return roundedNumber;
+}
+
+bool tokensContainGivenToken(std::vector<Token>& tokens, const std::string& givenToken)
+{
+    return std::any_of(tokens.begin(), tokens.end(),
+                       [&](const Token& token) { return token.value == givenToken; });
+}
+}
+}

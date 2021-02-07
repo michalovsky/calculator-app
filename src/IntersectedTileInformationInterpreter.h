@@ -3,13 +3,14 @@
 #include <memory>
 #include "Buffer.h"
 #include "IntersectedTileInformation.h"
+#include "OperationSolver.h"
 
 namespace calculator
 {
 class IntersectedTileInformationInterpreter
 {
 public:
-    IntersectedTileInformationInterpreter(std::shared_ptr<Buffer>);
+    IntersectedTileInformationInterpreter(std::shared_ptr<Buffer>, std::unique_ptr<OperationSolver>);
 
     void interpretTileInformation(const IntersectedTileInformation&);
 
@@ -28,5 +29,6 @@ private:
     void handleRemove();
 
     std::shared_ptr<Buffer> buffer;
+    std::unique_ptr<OperationSolver> operationSolver;
 };
 }

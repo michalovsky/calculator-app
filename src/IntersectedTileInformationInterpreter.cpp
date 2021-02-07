@@ -1,6 +1,7 @@
 #include "IntersectedTileInformationInterpreter.h"
 
 #include <algorithm>
+
 #include "OperationSolver.h"
 
 namespace calculator
@@ -25,8 +26,8 @@ const auto dotSign = ".";
 }
 
 IntersectedTileInformationInterpreter::IntersectedTileInformationInterpreter(
-    std::shared_ptr<Buffer> bufferInit)
-    : buffer{std::move(bufferInit)}
+    std::shared_ptr<Buffer> bufferInit, std::unique_ptr<OperationSolver> operationSolverInit)
+    : buffer{std::move(bufferInit)}, operationSolver{std::move(operationSolverInit)}
 {
 }
 
@@ -153,7 +154,7 @@ void IntersectedTileInformationInterpreter::handleResult()
 
     if (not currentWordIsOperationSign(currentWord))
     {
-        std::string result = OperationSolver::solve(buffer->getWords());
+        std::string result = operationSolver->solve(buffer->getWords());
         buffer->clearWords();
         buffer->addToExistingWord(result);
         buffer->setCurrentWordAsResult(true);
