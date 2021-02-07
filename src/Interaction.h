@@ -1,22 +1,30 @@
 #pragma once
-#include "TilesLayout.h"
+
 #include "Buffer.h"
 #include "OperationSolver.h"
+#include "TilesLayout.h"
 
+namespace calculator
+{
 class Interaction
 {
 public:
-	Interaction() = delete;
-	static void mouseOver(TilesLayout& tilesLayout, sf::Vector2f mousePosition);
-	static void mouseClick(TilesLayout& tilesLayout, sf::Vector2f mousePosition, int actionKey);
-private:
-	static bool isIntersecting(calculator::Tile & tile, sf::Vector2f positionToCheck );
-	static void handleNumbers(std::string value);
-	static void handleSigns(std::string value);
-	static void handleResult();
-	static void handleDot(std::string value);
-	static void handleClear();
-	static void handleRemove();
+    void handleMouseOverOnTilesLayout(TilesLayout& tilesLayout, sf::Vector2f mousePosition);
+    void handleMouseClickOnTilesLayout(TilesLayout& tilesLayout, sf::Vector2f mousePosition);
 
+private:
+    bool layoutCharacterIsNumber(LayoutCharacter);
+    bool layoutCharacterIsOperationSign(LayoutCharacter);
+    bool layoutCharacterIsResultSign(LayoutCharacter);
+    bool layoutCharacterIsDot(LayoutCharacter);
+    bool layoutCharacterIsClear(LayoutCharacter);
+    bool layoutCharacterIsRemove(LayoutCharacter);
+    void handleNumbers(const std::string& value);
+    void handleSigns(const std::string& value);
+    void handleResult();
+    void handleDot(const std::string& value);
+    void handleClear();
+    void handleRemove();
 };
 
+}

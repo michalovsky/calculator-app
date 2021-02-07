@@ -15,14 +15,14 @@ public:
 	~Calculator();
 	void run();
 private:
-	void initialize();
 	void clearWindow();
-	void update(calculator::InputKey);
-	void closeWindow(calculator::InputKey);
+	void update();
+	void closeWindow();
 	void drawWindow();
+
 	sf::RenderWindow * window;
 	std::unique_ptr<TilesLayout> tiles;
     std::unique_ptr<calculator::UserInputReader> userInputReader;
-
+    std::unique_ptr<calculator::Interaction> interaction;
 };
 

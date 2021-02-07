@@ -5,6 +5,5 @@ int main()
 	Calculator calc;
 	calc.run();
 
-	getchar();
 	return 0;
 }
