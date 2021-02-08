@@ -21,8 +21,8 @@ public:
     void draw(sf::RenderWindow&);
 
 private:
-    static std::array<sf::Vector2f, 19>& createTilePositions();
-    static std::array<std::unique_ptr<Tile>, 19>& createTiles();
+    static const std::array<sf::Vector2f, 19>& createTilePositions();
+    static const std::array<std::unique_ptr<Tile>, 19>& createTiles();
     static std::unique_ptr<Tile> createRegularTile(LayoutCharacter);
 
     const std::array<sf::Vector2f, 19>& tilePositions;

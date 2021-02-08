@@ -96,7 +96,7 @@ bool IntersectedTileInformationInterpreter::layoutCharacterIsRemove(LayoutCharac
 
 void IntersectedTileInformationInterpreter::handleNumbers(const std::string& value)
 {
-    std::string currentWord = buffer->getCurrentWord();
+    const std::string currentWord = buffer->getCurrentWord();
 
     if (currentWord == "0")
     {
@@ -117,7 +117,7 @@ void IntersectedTileInformationInterpreter::handleNumbers(const std::string& val
 
 void IntersectedTileInformationInterpreter::handleSigns(const std::string& value)
 {
-    std::string currentWord = buffer->getCurrentWord();
+    const auto currentWord = buffer->getCurrentWord();
 
     if (currentWord.empty() || currentWord == dotSign)
         return;
@@ -137,8 +137,8 @@ void IntersectedTileInformationInterpreter::handleSigns(const std::string& value
 
 void IntersectedTileInformationInterpreter::handleDot(const std::string& value)
 {
-    std::string currentWord = buffer->getCurrentWord();
-    std::size_t foundDot = currentWord.find(dotSign);
+    const auto currentWord = buffer->getCurrentWord();
+    const auto foundDot = currentWord.find(dotSign);
 
     if (foundDot == std::string::npos && not currentWord.empty() &&
         not currentWordIsOperationSign(currentWord))
@@ -150,11 +150,11 @@ void IntersectedTileInformationInterpreter::handleDot(const std::string& value)
 
 void IntersectedTileInformationInterpreter::handleResult()
 {
-    std::string currentWord = buffer->getCurrentWord();
+    const auto currentWord = buffer->getCurrentWord();
 
     if (not currentWordIsOperationSign(currentWord))
     {
-        std::string result = operationSolver->solve(buffer->getWords());
+        const auto result = operationSolver->solve(buffer->getWords());
         buffer->clearWords();
         buffer->addToExistingWord(result);
         buffer->setCurrentWordAsResult(true);
@@ -169,7 +169,7 @@ void IntersectedTileInformationInterpreter::handleClear()
 
 void IntersectedTileInformationInterpreter::handleRemove()
 {
-    std::string currentWord = buffer->getCurrentWord();
+    const auto currentWord = buffer->getCurrentWord();
 
     if (!buffer->isCurrentWordResult() && not currentWord.empty() &&
         not currentWordIsOperationSign(currentWord))

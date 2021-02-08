@@ -66,9 +66,9 @@ void handleMultiplicationDivisionTokens(std::vector<Token>& tokens)
     while (tokensContainGivenToken(tokens, multiplicationSign) ||
            tokensContainGivenToken(tokens, divisionSign))
     {
-        for (auto tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
+        for (size_t tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
         {
-            auto tokenValue = tokens[tokenIndex].value;
+            const auto tokenValue = tokens[tokenIndex].value;
             if (tokenValue == multiplicationSign)
             {
                 handleToken(tokens, tokenIndex, std::multiplies<>());
@@ -89,9 +89,9 @@ void handlePlusMinusTokens(std::vector<Token>& tokens)
 {
     while (tokensContainGivenToken(tokens, plusSign) || tokensContainGivenToken(tokens, minusSign))
     {
-        for (auto tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
+        for (size_t tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
         {
-            auto tokenValue = tokens[tokenIndex].value;
+            const auto tokenValue = tokens[tokenIndex].value;
             if (tokenValue == plusSign)
             {
                 handleToken(tokens, tokenIndex, std::plus<>());
@@ -118,7 +118,7 @@ void clearRedundantTokens(std::vector<Token>& tokens)
 std::string getResultFromTokens(std::vector<Token>& tokens)
 {
     int resultIndex = 0;
-    for (int tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
+    for (size_t tokenIndex = 0; tokenIndex < tokens.size(); tokenIndex++)
     {
         if (not tokens[tokenIndex].value.empty())
         {
@@ -131,8 +131,8 @@ std::string getResultFromTokens(std::vector<Token>& tokens)
 
 std::string roundNumber(const std::string& numberToRound)
 {
-    std::size_t foundDot = numberToRound.find(dotSign);
-    std::string roundedNumber = numberToRound;
+    const auto foundDot = numberToRound.find(dotSign);
+    auto roundedNumber = numberToRound;
 
     if (foundDot != std::string::npos)
     {

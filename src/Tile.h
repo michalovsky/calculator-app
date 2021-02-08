@@ -26,6 +26,6 @@ private:
     TextSfml text;
     RectangleSfml rectangle;
     const sf::Vector2f textOffset;
-    std::optional<LayoutCharacter> layoutCharacter;
+    const std::optional<LayoutCharacter> layoutCharacter;
 };
 }

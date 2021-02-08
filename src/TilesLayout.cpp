@@ -45,7 +45,7 @@ void TilesLayout::changeTilesColor(sf::Color color)
 
 void TilesLayout::changeTilesColorOnIntersection(sf::Color color, const sf::Vector2f& position)
 {
-    for (int tileIndex = 0; tileIndex < tiles.size(); tileIndex++)
+    for (size_t tileIndex = 0; tileIndex < tiles.size(); tileIndex++)
     {
         auto& tile = tiles[tileIndex];
         if (tile->isIntersecting(position) && tileIndex != resultTileIndex)
@@ -58,7 +58,7 @@ void TilesLayout::changeTilesColorOnIntersection(sf::Color color, const sf::Vect
 std::optional<IntersectedTileInformation>
 TilesLayout::getInformationAboutTileBeingIntersected(const sf::Vector2f& position)
 {
-    for (int tileIndex = 0; tileIndex < tiles.size(); tileIndex++)
+    for (size_t tileIndex = 0; tileIndex < tiles.size(); tileIndex++)
     {
         auto& tile = tiles[tileIndex];
         if (tile->isIntersecting(position) && tileIndex != resultTileIndex)
@@ -80,9 +80,9 @@ void TilesLayout::draw(sf::RenderWindow& window)
     }
 }
 
-std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
+const std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
 {
-    static std::array<sf::Vector2f, 19> tilePositions = {
+    static const std::array<sf::Vector2f, 19> tilePositions = {
         number0Position,        number1Position,  number2Position, number3Position,
         number4Position,        number5Position,  number6Position, number7Position,
         number8Position,        number9Position,  plusPosition,    minusPosition,
@@ -91,10 +91,10 @@ std::array<sf::Vector2f, 19>& TilesLayout::createTilePositions()
     return tilePositions;
 }
 
-std::array<std::unique_ptr<Tile>, 19>& TilesLayout::createTiles()
+const std::array<std::unique_ptr<Tile>, 19>& TilesLayout::createTiles()
 {
     const auto& tilePositions = createTilePositions();
-    static std::array<std::unique_ptr<Tile>, 19> tilesInit = {
+    static const std::array<std::unique_ptr<Tile>, 19> tilesInit = {
         createRegularTile(LayoutCharacter::Number0),
         createRegularTile(LayoutCharacter::Number1),
         createRegularTile(LayoutCharacter::Number2),

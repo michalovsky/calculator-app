@@ -1,8 +1,8 @@
 #pragma once
 
+#include <SFML/Graphics/Font.hpp>
 #include <string>
 #include <unordered_map>
-#include <SFML/Graphics/Font.hpp>
 
 namespace calculator
 {

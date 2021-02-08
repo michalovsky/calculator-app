@@ -9,6 +9,6 @@ namespace calculator
 struct IntersectedTileInformation
 {
     std::string text;
-    calculator::LayoutCharacter layoutCharacter;
+    LayoutCharacter layoutCharacter;
 };
 }
